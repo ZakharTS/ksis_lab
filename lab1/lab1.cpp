@@ -38,6 +38,33 @@ char* generateStr(int size) {
     return str;
 }
 
+char* f(const char str1[], int sz)
+{
+    char* str2 = new char[sz + 1];
+    __asm
+    {
+        mov esi, str1
+        mov edi, str2
+        mov eax, sz
+        mov bl, 2
+        div bl
+        mov ecx, eax
+
+        L :
+        movs
+            mov[edi], 43
+            inc esi
+            inc edi
+            loop L
+
+            mov edi, str2
+            add edi, sz
+            mov edi, 0
+    }
+
+    return str2;
+}
+
 void assemblyHelloWorld(char message[], char printFormat[]) {
      
     //int message = 65;
@@ -59,6 +86,7 @@ void assemblyHelloWorld(char message[], char printFormat[]) {
 
 int main()
 {
+    std::cout << f("Hellor", 6) << std::endl;
     //std::cout << "Hello World!" << std::endl;
     char str[] = "Hello World!";
     //char printFormat[] = "%s\n";
